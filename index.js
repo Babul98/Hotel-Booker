@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, "/public")));
 
 
 
-const MONGO_URL = "mongodb+srv://kbhagatb:kWQa7qmLjYHtlk2q@cluster0.qhf22jm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const MONGO_URL = "mongodb+srv://kbhagatb:kWQa7qmLjYHtlk2q@cluster0.qhf22jm.mongodb.net/wanderlust?retryWrites=true&w=majority&appName=Cluster0";
 
 main()
   .then(() => {
