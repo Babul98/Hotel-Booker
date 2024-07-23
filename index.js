@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, "/public")));
 
 
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+const MONGO_URL = "mongodb+srv://kbhagatb:kWQa7qmLjYHtlk2q@cluster0.qhf22jm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 main()
   .then(() => {
@@ -67,7 +67,7 @@ main()
     res.locals.error=req.flash("error");
     res.locals.currUser=req.user;
     next();
-  });
+  });  
   
   // app.get("/demouser",async(req,res)=>{
   //   let fakeUser=new User({
