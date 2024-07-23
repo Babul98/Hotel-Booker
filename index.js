@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -27,7 +28,7 @@ app.use(express.static(path.join(__dirname, "/public")));
 
 
 
-const MONGO_URL = "mongodb+srv://kbhagatb:kWQa7qmLjYHtlk2q@cluster0.qhf22jm.mongodb.net/wanderlust?retryWrites=true&w=majority&appName=Cluster0";
+const MONGO_URL = process.env.MONGO_URL;
 
 main()
   .then(() => {
