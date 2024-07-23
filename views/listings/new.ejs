@@ -1,0 +1,92 @@
+<% layout("/layouts/boilerplate") %> <br /><br />
+<h3>Create a New Listing</h3>
+<div class="row">
+  <div class="col-8 offset-2">
+    <form action="/listings" method="POST" class="needs-validation" novalidate>
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input
+          name="dat[title]"
+          placeholder="enter title"
+          type="text"
+          class="form-control"
+          required
+        />
+        <div class="valid-feedback">Title Looks</div>
+      </div>
+      <div class="row">
+        <div class="mb-3 col-md-4">
+          <label for="Location" class="form-label">Location</label>
+          <input
+            name="dat[location]"
+            placeholder="enter location"
+            type="text"
+            class="form-control"
+            required
+          />
+          <div class="invalid-feedback">Please enter the location</div>
+        </div>
+
+        <div class="mb-3 col-md-8">
+          <label for="Country" class="form-label">Country</label>
+          <input
+            name="dat[country]"
+            placeholder="enter country"
+            type="text"
+            class="form-control"
+            required
+             
+          />
+          <div class="invalid-feedback">Please Enter the valid Country</div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea
+          name="dat[description]"
+          placeholder="enter description"
+          class="form-control"
+          required
+        ></textarea>
+      </div>
+      <div class="valid-feedbacl">Description looks good!</div>
+      <div class="mb-3">
+        <label for="image" class="form-label">image Link</label>
+        <input
+          name="dat[image][url]"
+          placeholder="enter image"
+          type="text"
+          class="form-control"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="price" class="form-label">price</label>
+        <input
+          name="dat[price]"
+          placeholder="enter price"
+          type="text"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="mb-3">
+        <label for="Date" class="form-label">Date</label>
+        <input
+          name="dat[date]"
+          placeholder="enter date"
+          type="date"
+          class="form-control"
+          required
+        />
+      </div>
+
+      <br />
+      <button class="btn btn-dark">ADD</button>
+    </form>
+  </div>
+</div>
+
+<!-- // The 'name="dat[country]"' convention in the form creates a nested object structure.
+// This is useful for organizing complex data when the form is submitted.
+// Middleware like 'body-parser' in Express parses this nested data into 'req.body.dat'. -->
