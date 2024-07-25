@@ -10,5 +10,7 @@ const userSchema=new Schema({
 });
 
 userSchema.plugin(passportLocalMongoose);
+// passport will add user id and password
+
 
 module.exports=mongoose.model("User",userSchema);
