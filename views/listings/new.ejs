@@ -2,7 +2,13 @@
 <h3>Create a New Listing</h3>
 <div class="row">
   <div class="col-8 offset-2">
-    <form action="/listings" method="POST" class="needs-validation" novalidate>
+    <form
+      action="/listings"
+      method="POST"
+      class="needs-validation"
+      novalidate
+      enctype="multipart/form-data"
+    >
       <div class="mb-3">
         <label for="title" class="form-label">Title</label>
         <input
@@ -35,7 +41,6 @@
             type="text"
             class="form-control"
             required
-             
           />
           <div class="invalid-feedback">Please Enter the valid Country</div>
         </div>
@@ -49,13 +54,21 @@
           required
         ></textarea>
       </div>
-      <div class="valid-feedbacl">Description looks good!</div>
-      <div class="mb-3">
+      <div class="valid-feedback">Description looks good!</div>
+      <!-- <div class="mb-3">
         <label for="image" class="form-label">image Link</label>
         <input
           name="dat[image][url]"
           placeholder="enter image"
           type="text"
+          class="form-control"
+        />
+      </div> -->
+      <div class="mb-3">
+        <label for="image" class="form-label">image file</label>
+        <input
+          name="dat[image][url]"
+          type="file"
           class="form-control"
         />
       </div>
