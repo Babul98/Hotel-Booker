@@ -32,12 +32,12 @@ module.exports.showroute = async (req, res) => {
 };
 //create listing
 module.exports.post_new = async (req, res, next) => {
-  let url=req.file.path;
-  let filename=req.file.filename;
-  console.log(url,"...",filename);
+  let url = req.file.path;
+  let filename = req.file.filename;
+  console.log(url, "...", filename);
   const newListing = new Listing(req.body.dat);
   newListing.owner = req.user._id;
-  newListing.image={url,filename};
+  newListing.image = { url, filename };
 
   // it is comes from passport from login details and we pass the id of the login user
 
@@ -48,21 +48,29 @@ module.exports.post_new = async (req, res, next) => {
 
 //edit_from
 module.exports.edit_form = async (req, res) => {
+
   const { id } = req.params;
   const listing = await Listing.findById(id);
   if (!listing) {
     throw new ExpressError(404, "Listing not found");
   }
-  res.render("listings/edit.ejs", { listing });
+  let originalImageUrl=listing.image.url;
+  originalImageUrl=originalImageUrl.replace("/upload","/upload/h_300,w_250");
+  res.render("listings/edit.ejs", { listing,originalImageUrl });
 };
 
 // update listing
 
 module.exports.update = async (req, res) => {
   const { id } = req.params;
-  let listing = await Listing.findById(id);
+  let listing = await Listing.findByIdAndUpdate(id, { ...req.body.dat });
+  if (req.file) {
+    let url = req.file.path;
+    let filename = req.file.filename;
+    listing.image = { url, filename };
+    await listing.save();
+  }
 
-  await Listing.findByIdAndUpdate(id, { ...req.body.dat });
   // console.log(`/listings/${id}`);
   req.flash("success", "Listing is updated");
   res.redirect(`/listings/${id}`);
