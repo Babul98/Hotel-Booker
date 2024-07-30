@@ -26,25 +26,35 @@ const listingSchema = new Schema({
   price: Number,
   location: String,
   country: String,
-  date:Date,
+  date: Date,
   reviews: [
     {
       type: Schema.Types.ObjectId,
       ref: "Review",
     },
   ],
-  owner:{
-    type:Schema.Types.ObjectId,
-    ref:"User",
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
   },
-  
+  geometry: {
+    type: {
+      type: String, // Don't do `{ location: { type: String } }`
+      enum: ["Point"], // 'location.type' must be 'Point'
+      required: true,
+    },
+    coordinates: {
+      type: [Number],
+      required: true,
+    },
+  },
 });
 
 listingSchema.post("findOneAndDelete", async (listing) => {
   if (listing) {
     //when a listing is deleted using the findOneAndDelete method, all reviews associated with that listing are also deleted from the Review collection,
     await Review.deleteMany({ _id: { $in: listing.reviews } });
-    // _id listing.review 
+    // _id listing.review
   }
 });
 

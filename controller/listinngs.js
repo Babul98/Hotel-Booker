@@ -41,22 +41,21 @@ module.exports.post_new = async (req, res, next) => {
     .forwardGeocode({
       query: req.body.dat.location,
       limit: 1,
-
     })
     .send();
-    console.log(response.body.features[0].geometry);
-    res.send("Done!");
 
   let url = req.file.path;
   let filename = req.file.filename;
   // console.log(url, "...", filename);
   const newListing = new Listing(req.body.dat);
   newListing.owner = req.user._id;
+  newListing.geometry = response.body.features[0].geometry;
   newListing.image = { url, filename };
 
   // it is comes from passport from login details and we pass the id of the login user
 
-  await newListing.save();
+  let savedlis = await newListing.save();
+  console.log(savedlis);
   req.flash("success", "New listing is created");
   res.redirect("/listings");
 };
