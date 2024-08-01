@@ -85,11 +85,11 @@ async function main() {
   await mongoose.connect(MONGO_URL);
 }
 
-app.get("/", (req, res) => {
-  res.send("Hi I'm root");
-});
+// app.get("/", (req, res) => {
+//   res.send("Hi I'm root");
+// });
 
-app
+
 
 app.use("/listings",listings);
 app.use("/listings/:id/reviews", reviews);
