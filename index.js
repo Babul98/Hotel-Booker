@@ -13,11 +13,13 @@ const Review = require("./models/review.js");
 const listings=require("./routes/listing.js");
 const reviews=require("./routes/review.js");
 const session=require("express-session");
+const MongoStore=require("connect-mongo");
 const flash=require("connect-flash");
 const passport=require("passport");
 const LocalStrategy=require("passport-local"); // authenticating with a username and password.
 const User=require("./models/user.js");
 const userRouter=require("./routes/user.js");
+const { optional } = require("joi");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views")); // to access from anywhere and we don't need to define the path all the views are handled
@@ -27,19 +29,32 @@ app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
 
-
 const MONGO_URL = process.env.MONGO_URL;
 
 main()
   .then(() => {
     console.log("connected to DB");
   })
-  .catch((err) => {
+  .catch((err) => { 
     console.log(err);
   });
 
+  const store=MongoStore.create({
+    mongoUrl:MONGO_URL,
+    crypto:{
+      secret:process.env.SECRET,
+    },
+    touchAfter:24*3600,
+  
+  });
+  
+  store.on("error",()=>{
+    console.log("Error in Mongo Session Store",err); 
+  })
+  
   const sessionOptions={
-    secret:"mysupersecretcode",
+    store,
+    secret:process.env.SECRET,
     resave:false,
     saveUninitialized:true,
     cookie:{
@@ -49,6 +64,8 @@ main()
 
     }
   };
+
+ 
 
   app.use(session(sessionOptions));
   app.use(flash());
